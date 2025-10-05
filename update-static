@@ -1,0 +1,1 @@
+git subtree pull --squash --prefix=upstream/listmonk listmonk/master
