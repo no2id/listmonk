@@ -92,7 +92,7 @@ services:
       - listmonk
     depends_on:
       - nginx
-    command: certonly --webroot --webroot-path=/var/www/certbot --email postmaster@no2id.uk --agree-tos --no-eff-email --staging -d lists.no2id.uk
+    command: certonly --webroot --webroot-path=/var/www/certbot --email postmaster@no2id.uk --agree-tos --no-eff-email --force-renewal -d lists.no2id.uk
 
 
 networks:
