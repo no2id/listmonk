@@ -14,7 +14,8 @@ PermissionsStartOnly=true
 WorkingDirectory=/usr/bin
 ExecStartPre=/usr/bin/mkdir -p "/etc/listmonk/uploads"
 ExecStartPre=/usr/bin/listmonk --config /etc/listmonk/config.toml --upgrade --yes
-ExecStart=/usr/bin/listmonk --config /etc/listmonk/config.toml --static-dir /listmonk/static
+ExecStart=/usr/bin/listmonk --config /etc/listmonk/config.toml 
+# --static-dir /listmonk/static
 TimeoutStopSec=10
 Restart=on-failure
 RestartSec=5
