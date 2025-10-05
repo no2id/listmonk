@@ -46,25 +46,25 @@ services:
       LISTMONK_ADMIN_PASSWORD: ${LISTMONK_ADMIN_PASSWORD:-}   # Otherwise, the user can be setup on the web app after the first visit to http://localhost:9000
   
 # Postgres database
-listmonk-pgdb:
-  image: postgres:18-alpine
-  container_name: listmonk_pgdb
-  restart: unless-stopped
-  ports:
+  listmonk-pgdb:
+    image: postgres:18-alpine
+    container_name: listmonk_pgdb
+    restart: unless-stopped
+    ports:
     - "5432:5432"
-  networks:
+    networks:
     - listmonk
-  environment:
-    <<: *db-credentials
-  healthcheck:
-    test: ["CMD-SHELL", "pg_isready -U listmonk"]
-    interval: 10s
-    timeout: 5s
-    retries: 6
-  volumes:
-    - type: volume
-      source: listmonk-pg-data
-      target: /var/lib/postgresql/data
+    environment:
+      <<: *db-credentials
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U listmonk"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    volumes:
+      - type: volume
+        source: listmonk-pg-data
+        target: /var/lib/postgresql/data
 
   nginx:
     image: nginx:mainline-alpine
