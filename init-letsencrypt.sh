@@ -19,7 +19,7 @@ if [ -d "$data_path" ]; then
 fi
 
 echo "### Creating dummy certificate for $domains ..."
-path="/etc/letsencrypt/live/$domains"
+path="/etc/certbot/live/$domains"
 mkdir -p "$data_path/conf/live/$domains"
 docker compose run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:$rsa_key_size -days 1\
@@ -35,9 +35,9 @@ echo
 
 echo "### Deleting dummy certificate for $domains ..."
 docker compose run --rm --entrypoint "\
-  rm -Rf /etc/letsencrypt/live/$domains && \
-  rm -Rf /etc/letsencrypt/archive/$domains && \
-  rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
+  rm -Rf /etc/certbot/live/$domains && \
+  rm -Rf /etc/certbot/archive/$domains && \
+  rm -Rf /etc/certbot/renewal/$domains.conf" certbot
 echo
 
 
@@ -64,6 +64,7 @@ docker compose run --rm --entrypoint "\
     $domain_args \
     --rsa-key-size $rsa_key_size \
     --agree-tos \
+    --no-eff-email \
     --force-renewal" certbot
 echo
 
