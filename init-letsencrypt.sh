@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-domains=(lists.no2id.uk)
+domains=(listmonk.no2id.uk)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="postmaster@no2id.uk"
