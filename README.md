@@ -1,5 +1,5 @@
 # listmonk
-lists.no2id.uk via listmonk
+listmonk.no2id.uk
 
 Cribbed together from:
  - https://listmonk.app/docs/installation/
