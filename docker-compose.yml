@@ -14,10 +14,8 @@ services:
     container_name: listmonk_app
     restart: unless-stopped
     volumes:
-      - ./uploads:/listmonk/uploads:rw                            # Mount an uploads directory on the host to /listmonk/uploads inside the container.
+      - web-uploads:/listmonk/uploads:rw                            # Mount an uploads directory on the host to /listmonk/uploads inside the container.
                                                                   # To use this, change directory path in Admin -> Settings -> Media to /listmonk/uploads
-      - ./upstream/listmonk/static:/listmonk/static
-
     ports:
       - "9000:9000"                                           # To change the externally exposed port, change to: $custom_port:9000
     networks:
@@ -62,9 +60,7 @@ services:
       timeout: 5s
       retries: 6
     volumes:
-      - type: volume
-        source: listmonk-pg-data
-        target: /var/lib/postgresql/data
+      - listmonk-pg-data:/var/lib/postgresql/data
 
   nginx:
     image: nginx:mainline-alpine
@@ -74,8 +70,8 @@ services:
       - "443:443"
     volumes:
       - ./etc/nginx:/etc/nginx/conf.d
-      - ./etc/certbot:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - certbot-etc:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
     networks:
       - listmonk
     depends_on:
@@ -86,17 +82,19 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./etc/certbot:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - certbot-etc:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
     networks:
       - listmonk
     depends_on:
       - nginx
     command: certonly --webroot --webroot-path=/var/www/certbot --email postmaster@no2id.uk --agree-tos --no-eff-email --force-renewal -d listmonk.no2id.uk
 
-
 networks:
   listmonk:
 
 volumes:
   listmonk-pg-data:
+  certbot-www:
+  certbot-etc:
+  web-uploads:
